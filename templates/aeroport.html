@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <h1 class="text-3xl font-bold">
+      Desenvolupament web en entorn servidor - Aeroport {{ codi }}
+    </h1>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <ul>
+          {% for a in aeroports %}
+          <li>
+            <a href="/vols/{{a['id_airport']}}">
+              {{a['id_airport']}} - {{a['location']}}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-4xl font-extrabold">Arribades</h2>
+        {% if arribades|length>0 %}
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="px-6 py-3">Flight</th>
+              <th class="px-6 py-3">Departure</th>
+              <th class="px-6 py-3">Arrival</th>
+              <th class="px-6 py-3">Departure Time</th>
+              <th class="px-6 py-3">Arrival Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vuelo in arribades %}
+            <tr>
+              <td class="px-6 py-4">{{ vuelo.flight_number}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_time}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_time}}</td>
+              <td class="px-6 py-4">
+                <a href="{{ url_for('retardarVol', id_vol=vuelo['id_flight'], codiAeroport=codi) }}">
+                  🕒 Endarrerir 2 hores
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No hay datos</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+
+      </div>
+      <div>
+        <h2 class="text-4xl font-extrabold">Sortides</h2>
+        {% if sortides|length>0 %}
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="px-6 py-3">Flight</th>
+              <th class="px-6 py-3">Departure</th>
+              <th class="px-6 py-3">Arrival</th>
+              <th class="px-6 py-3">Departure Time</th>
+              <th class="px-6 py-3">Arrival Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vuelo in sortides %}
+            <tr>
+              <td class="px-6 py-4">{{ vuelo.flight_number}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_time}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_time}}</td>
+              <td class="px-6 py-4">
+                <a href="{{ url_for('retardarVol', id_vol=vuelo['id_flight'], codiAeroport=codi) }}">
+                  🕒 Endarrerir 2 hores
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No hay datos</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+
+      </div>
+      <div>
+        <h2 class="text-4xl font-extrabold">Arribades Nacionals</h2>
+        {% if arribadesNacionals|length>0 %}
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="px-6 py-3">Flight</th>
+              <th class="px-6 py-3">Departure</th>
+              <th class="px-6 py-3">Arrival</th>
+              <th class="px-6 py-3">Departure Time</th>
+              <th class="px-6 py-3">Arrival Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vuelo in arribadesNacionals %}
+            <tr>
+              <td class="px-6 py-4">{{ vuelo.flight_number}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_time}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_time}}</td>
+              <td class="px-6 py-4">
+                <a href="{{ url_for('retardarVol', id_vol=vuelo['id_flight'], codiAeroport=codi) }}">
+                  🕒 Endarrerir 2 hores
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No hay datos</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+
+      </div>
+      <div>
+        <h2 class="text-4xl font-extrabold">Sortides Nacionals</h2>
+        {% if sortidesNacionals|length>0 %}
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="px-6 py-3">Flight</th>
+              <th class="px-6 py-3">Departure</th>
+              <th class="px-6 py-3">Arrival</th>
+              <th class="px-6 py-3">Departure Time</th>
+              <th class="px-6 py-3">Arrival Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vuelo in sortidesNacionals %}
+            <tr>
+              <td class="px-6 py-4">{{ vuelo.flight_number}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_airport}}</td>
+              <td class="px-6 py-4">{{ vuelo.departure_time}}</td>
+              <td class="px-6 py-4">{{ vuelo.arrival_time}}</td>
+              <td class="px-6 py-4">
+                <a href="{{ url_for('retardarVol', id_vol=vuelo['id_flight'], codiAeroport=codi) }}">
+                  🕒 Endarrerir 2 hores
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No hay datos</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
