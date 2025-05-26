@@ -60,6 +60,63 @@ def afegirPlat():
         return redirect(url_for('llistaPlats'))
     return render_template('afegir_plat.html')
 
+# 7. Calcular total de una comanda
+
+@app.route('/calcula_total/<int:id_comanda>')
+def calculaTotal(id_comanda):
+    vols().actualitzaPreuComanda(id_comanda)
+    return redirect(url_for('veureComanda', id_comanda=id_comanda))
+
+# 8. Actualizar el estado de una comanda
+
+@app.route('/canviar_estat/<int:id_comanda>', methods=['POST'])
+def canviarEstat(id_comanda):
+    nou_estat = request.form['estat']
+    vols().actualitzaEstat(id_comanda, nou_estat)
+    return redirect(url_for('veureComanda', id_comanda=id_comanda))
+
+# Ejemplo de html
+
+<form method="post" action="{{ url_for('canviarEstat', id_comanda=comanda.id_comanda) }}">
+  <select name="estat">
+    <option value="comanat">Comanat</option>
+    <option value="preparat">Preparat</option>
+    <option value="cobrat">Cobrat</option>
+    <option value="finalitzat">Finalitzat</option>
+  </select>
+  <button type="submit">Actualitzar estat</button>
+</form>
+
+#  Mostrar alertas y validaciones
+
+from flask import flash
+
+@app.route('/afegir_plat/<int:id_comanda>', methods=['POST'])
+def afegirPlat(id_comanda):
+    if not vols().comandaExisteix(id_comanda):
+        flash("Error: la comanda no existeix.")
+        return redirect(url_for('llistarComandes'))
+    # resto del codi
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+# 9. Mostrar los platos de una comanda específica
+
+@app.route('/canviar_estat/<int:id_comanda>', methods=['POST'])
+def canviarEstat(id_comanda):
+    nou_estat = request.form['estat']
+    vols().actualitzaEstat(id_comanda, nou_estat)
+    return redirect(url_for('veureComanda', id_comanda=id_comanda))
+
+
 
 
 
