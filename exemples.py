@@ -143,6 +143,48 @@ def canviarEstat(id_comanda):
 
 
 
+<h1 class="text-3xl font-bold mb-6 text-center">Fer comanda</h1>
+{% if missatge %}
+  <div class="mb-4 p-4 rounded text-white font-semibold {% if color == 'green' %}bg-green-500{% else %}bg-red-500{% endif %}">
+    {{ missatge }}
+  </div>
+{% endif %}
+
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow mb-8">
+  <form method="get" action="{{ url_for('verifica') }}">
+    <div class="mb-4">
+      <label class="block font-bold mb-1">Número de taula</label>
+      <input type="number" name="taula" value="1"
+        class="w-full px-3 py-2 border border-gray-300 rounded">
+    </div>
+
+
+
+@app.route('/verifica')
+def verifica():
+    taula = int(request.args.get('taula'))
+    comensals = int(request.args.get('comensals'))
+
+    # Aquí criden la funció que hauran de completar
+    missatge, color = analitzaComanda(taula, comensals)
+
+    plats = restaurant().carregaPlats()
+    return render_template('index.html', plats=plats, missatge=missatge, color=color)
+
+
+# Aquesta és la funció que hauran de completar
+def analitzaComanda(taula, comensals):
+    if comensals <= 0:
+        return "El número de comensals ha de ser més gran que 0", "red"
+    if not restaurant().taulaBuida(taula):
+        return "La taula està OCUPADA", "red"
+
+
+
+
+
+
+
 
 
 
