@@ -60,6 +60,31 @@ def afegirPlat():
         return redirect(url_for('llistaPlats'))
     return render_template('afegir_plat.html')
 
+# 6. Añadir columna tasas
+
+def agregar_campo_tasas(self):
+    """
+    Añade el campo 'tasas' a la tabla airports con valores por defecto:
+    - 40 para España
+    - 30 para Portugal
+    - 50 para otros países
+    """
+    self.conecta()
+
+    # 1. Añadir la columna si no existe
+    sql_alter = "ALTER TABLE airports ADD COLUMN tasas DECIMAL(10,2) DEFAULT 50"
+    self.cursor.execute(sql_alter)
+
+    # 2. Actualizar registros según país
+    sql_update_es = "UPDATE airports SET tasas = 40 WHERE country = 'ESPAÑA'"
+    sql_update_pt = "UPDATE airports SET tasas = 30 WHERE country = 'PORTUGAL'"
+
+    self.cursor.execute(sql_update_es)
+    self.cursor.execute(sql_update_pt)
+
+    self.desconecta()
+
+
 # 7. Calcular total de una comanda
 
 @app.route('/calcula_total/<int:id_comanda>')
